@@ -1,12 +1,13 @@
 #include "Scheduler.h"
 
-class RoundRobin : public Scheduler {
-public:
-    Process* select(std::vector<Process*>& rq, int currentTime) override {
-        if(rq.empty()) return nullptr;
-        Process* p = rq.front();
-        rq.erase(rq.begin());
-        rq.push_back(p);
-        return p;
+RoundRobin::RoundRobin(int quantum) : quantum_(quantum > 0 ? quantum : 1) {}
+
+Process* RoundRobin::select(std::vector<Process*>& readyQueue, int /*currentTime*/) {
+    if (readyQueue.empty()) {
+        return nullptr;
     }
-};
+
+    Process* selected = readyQueue.front();
+    readyQueue.erase(readyQueue.begin());
+    return selected;
+}

@@ -1,5 +1,5 @@
-#ifndef WORKLOAD_GEN_H
-#define WORKLOAD_GEN_H
+#ifndef WORKLOAD_GENERATOR_H
+#define WORKLOAD_GENERATOR_H
 
 #include "../process/Process.h"
 #include <vector>

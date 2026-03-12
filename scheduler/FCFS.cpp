@@ -1,9 +1,11 @@
 #include "Scheduler.h"
 
-class FCFS : public Scheduler {
-public:
-    Process* select(std::vector<Process*>& rq, int currentTime) override {
-        if(rq.empty()) return nullptr;
-        return rq.front();
+Process* FCFS::select(std::vector<Process*>& readyQueue, int /*currentTime*/) {
+    if (readyQueue.empty()) {
+        return nullptr;
     }
-};
+
+    Process* selected = readyQueue.front();
+    readyQueue.erase(readyQueue.begin());
+    return selected;
+}

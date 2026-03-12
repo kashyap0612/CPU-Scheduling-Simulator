@@ -1,16 +1,15 @@
 #ifndef METRICS_H
 #define METRICS_H
 
-#include <iostream>
-
 class Metrics {
-    long totalWaiting=0;
-    long totalTurnaround=0;
-    int completed=0;
-
 public:
-    void record(int wait, int tat);
-    void print();
+    void record(int wait_time, int turnaround_time);
+    void print() const;
+
+private:
+    long total_waiting_time_{0};
+    long total_turnaround_time_{0};
+    int completed_processes_{0};
 };
 
 #endif
