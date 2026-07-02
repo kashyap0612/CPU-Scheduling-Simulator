@@ -1,0 +1,65 @@
+========================================================================
+             CPU SCHEDULING SIMULATOR - WSL SETUP & RUN INSTRUCTIONS
+========================================================================
+
+This file details the step-by-step instructions to set up, compile, and run 
+the CPU Scheduling Simulator using Windows Subsystem for Linux (WSL).
+
+------------------------------------------------------------------------
+1. PREREQUISITES
+------------------------------------------------------------------------
+Before compiling, ensure you have WSL (specifically Ubuntu) installed on 
+your Windows machine, along with a modern GCC compiler.
+
+- To verify WSL status on Windows (PowerShell/CMD):
+  > wsl --list --verbose
+
+- To verify g++ (GCC) is installed inside your default WSL distro:
+  > wsl g++ --version
+  (Requires GCC version supporting C++17, e.g., GCC 7+)
+
+- If g++ is missing in WSL, run the following commands inside WSL to install:
+  > sudo apt update
+  > sudo apt install build-essential
+
+------------------------------------------------------------------------
+2. COMPILATION INSTRUCTIONS
+------------------------------------------------------------------------
+You can compile the C++ simulator directly from your Windows command prompt/terminal 
+by forwarding the build command to WSL. 
+
+Run the following command from the root of the project directory:
+> wsl g++ -std=c++17 main.cpp cpu/*.cpp metrics/*.cpp workload/*.cpp scheduler/*.cpp -o scheduler_sim
+
+This compiles all source files and produces a Linux-compatible executable 
+named `scheduler_sim` in the root folder.
+
+------------------------------------------------------------------------
+3. EXECUTION INSTRUCTIONS
+------------------------------------------------------------------------
+Run the compiled binary using WSL:
+> wsl ./scheduler_sim
+
+This runs the simulator loop and outputs the performance metrics to stdout.
+
+------------------------------------------------------------------------
+4. HOW THE SIMULATOR WORKS & CURRENT CODE CONFIGURATION
+------------------------------------------------------------------------
+- Entry Point: `main.cpp`
+- Current Configuration:
+  1. Instantiates a First-Come, First-Served (FCFS) scheduler.
+  2. Creates a virtual CPU with 4 cores.
+  3. Generates a synthetic workload of 50 processes.
+  4. Runs the simulation.
+  5. Computes and prints performance metrics (Average Waiting Time, Average Turnaround Time).
+
+- Modifying the Scheduler:
+  To change the scheduling policy, open `main.cpp`, change the instantiated scheduler, 
+  recompile using the step in Section 2, and run using the step in Section 3.
+  For example, to run the Round Robin scheduler:
+  
+  ```cpp
+  #include "scheduler/RoundRobin.cpp"
+  ...
+  Scheduler* s = new RoundRobin();
+  ```
